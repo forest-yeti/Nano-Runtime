@@ -1,0 +1,36 @@
+FNC Sum
+    DEF INT y
+    POPI y
+
+    DEF INT x
+    POPI x
+
+    LOADI _Acc 0
+    ADD x
+    ADD y
+
+    PUTI _Acc
+    LOADI _Acc 0
+    
+    RET
+FNC END
+
+FNC __Main:
+    DEF INT x
+    LOADI x 200
+
+    DEF INT y
+    LOADI y 200
+
+    PUTI x
+    PUTI y
+    CALL Sum
+
+    DEF INT tmp
+    POPI tmp
+
+    PUTI tmp
+    CALL __I_Output_WriteLine
+
+    RET
+FNC END
