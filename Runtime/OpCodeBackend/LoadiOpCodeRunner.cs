@@ -3,6 +3,7 @@ using Nano_Runtime.Helper;
 using Nano_Runtime.Memory;
 using Nano_Runtime.Runtime.Panic;
 using Nano_Runtime.Runtime.Structure;
+using System.Globalization;
 
 namespace Nano_Runtime.Runtime.OpCodeBackend
 {
@@ -33,22 +34,22 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
                 );
             }
 
-            int intValue = 0;
-            if (!int.TryParse(value, out intValue))
+            float numberValue = 0;
+            if (!float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out numberValue))
             {
                 throw new FailedExectionPlan(
                     (int)FallbackCode.OpCodeWrongStructure,
-                    $"LOADI op code need to define right arg as int value"
+                    $"LOADI op code need to define right arg as number value"
                 );
             }
 
             if (ReservedWord.IsAccumulatorRegisterWord(variableName))
             {
-                GlobalRegister.Accumulator = intValue;
+                GlobalRegister.Accumulator = numberValue;
                 return;
             }
 
-            if (!CallStack.GetScope(GlobalRegister.RunningFunction).HasIntVariable(variableName))
+            if (!CallStack.GetScope(GlobalRegister.RunningFunction).HasNumberVariable(variableName))
             {
                 throw new FailedExectionPlan(
                     (int)FallbackCode.FunctionScopeVariableNotDefined,
@@ -58,7 +59,7 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
 
             CallStack
                 .GetScope(GlobalRegister.RunningFunction)
-                .LoadIntVariable(variableName, intValue);
+                .LoadNumberVariable(variableName, numberValue);
         }
     }
 }

@@ -25,9 +25,9 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
             }
 
             // @TODO: Временное решение, для самой ранней версии
-            if (functionName == "__I_Output_WriteLine")
+            if (functionName == "__N_Output_WriteLine")
             {
-                int intValue = GlobalStack.IntStack.Pop();
+                float intValue = GlobalStack.NumberStack.Pop();
                 Console.WriteLine(intValue);
                 return;
             }

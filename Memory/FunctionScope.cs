@@ -1,15 +1,18 @@
 ﻿using Nano_Runtime.Fallback;
+using Nano_Runtime.Runtime;
 using Nano_Runtime.Runtime.Panic;
+using System.Reflection.Metadata;
 
 namespace Nano_Runtime.Memory
 {
     internal class FunctionScope
     {
-        private readonly Dictionary<string, Variable<int>> _intVariables = new();
+        private readonly Dictionary<string, Variable<float>> _numberVariables = new();
+        private readonly Dictionary<string, string> _numberTypeMapping = new();
 
-        public void AddIntVariable(string name, int value)
+        public void AddNumberVariable(string name, string type)
         {
-            if (HasIntVariable(name))
+            if (HasNumberVariable(name))
             {
                 throw new FailedExectionPlan(
                     (int)FallbackCode.FunctionScopeVariableAlreadyDefined,
@@ -17,12 +20,34 @@ namespace Nano_Runtime.Memory
                 );
             }
 
-            _intVariables[name] = new Variable<int>(name, value);
+            _numberVariables[name] = new Variable<float>(name, 0f);
+            _numberTypeMapping[name] = type;
         }
 
-        public void LoadIntVariable(string name, int value)
+        public void LoadNumberVariable(string name, float value)
         {
-            if (!HasIntVariable(name))
+            if (!HasNumberVariable(name))
+            {
+                throw new FailedExectionPlan(
+                    (int)FallbackCode.FunctionScopeVariableNotDefined,
+                    $"Function scope number variable not defined with name {name}"
+                );
+            }
+
+            if (_numberTypeMapping[name] == TypeTable.INT_TYPE && !TypeTable.IsInteger(value))
+            {
+                throw new FailedExectionPlan(
+                    (int)FallbackCode.LoadFloatToInt,
+                    $"Variable with name {name} supported only integer value"
+                );
+            }
+
+            _numberVariables[name].Value = value;
+        }
+
+        public float GetNumberVariable(string name)
+        {
+            if (!HasNumberVariable(name))
             {
                 throw new FailedExectionPlan(
                     (int)FallbackCode.FunctionScopeVariableNotDefined,
@@ -30,25 +55,12 @@ namespace Nano_Runtime.Memory
                 );
             }
 
-            _intVariables[name].Value = value;
+            return _numberVariables[name].Value;
         }
 
-        public int GetIntVariable(string name)
+        public bool HasNumberVariable(string name)
         {
-            if (!HasIntVariable(name))
-            {
-                throw new FailedExectionPlan(
-                    (int)FallbackCode.FunctionScopeVariableNotDefined,
-                    $"Function scope variable not defined with name {name}"
-                );
-            }
-
-            return _intVariables[name].Value;
-        }
-
-        public bool HasIntVariable(string name)
-        {
-            return _intVariables.ContainsKey(name);
+            return _numberVariables.ContainsKey(name);
         }
     }
 }

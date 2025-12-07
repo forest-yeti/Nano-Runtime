@@ -23,9 +23,9 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
                 );
             }
 
-            int value = CallStack
+            float value = CallStack
                 .GetScope(GlobalRegister.RunningFunction)
-                .GetIntVariable(variableName);
+                .GetNumberVariable(variableName);
 
             GlobalRegister.Accumulator += value;
         }

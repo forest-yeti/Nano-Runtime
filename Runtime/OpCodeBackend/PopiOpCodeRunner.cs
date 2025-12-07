@@ -23,7 +23,7 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
                 );
             }
 
-            if (GlobalStack.IntStack.Count == 0)
+            if (GlobalStack.NumberStack.Count == 0)
             {
                 throw new FailedExectionPlan(
                     (int)FallbackCode.EmptyGlobalStack,
@@ -31,11 +31,11 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
                 );
             }
 
-            int intValue = GlobalStack.IntStack.Pop();
+            float intValue = GlobalStack.NumberStack.Pop();
 
             CallStack
                 .GetScope(GlobalRegister.RunningFunction)
-                .LoadIntVariable(variableName, intValue);
+                .LoadNumberVariable(variableName, intValue);
         }
     }
 }

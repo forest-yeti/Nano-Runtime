@@ -26,15 +26,15 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
 
             if (ReservedWord.IsAccumulatorRegisterWord(variableName))
             {
-                GlobalStack.IntStack.Push(GlobalRegister.Accumulator);
+                GlobalStack.NumberStack.Push(GlobalRegister.Accumulator);
                 return;
             }
 
-            int value = CallStack
+            float value = CallStack
                 .GetScope(GlobalRegister.RunningFunction)
-                .GetIntVariable(variableName);
+                .GetNumberVariable(variableName);
 
-            GlobalStack.IntStack.Push(value);
+            GlobalStack.NumberStack.Push(value);
         }
     }
 }

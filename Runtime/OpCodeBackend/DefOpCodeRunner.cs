@@ -8,11 +8,10 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
 {
     internal class DefOpCodeRunner : IOpCodeRunner
     {
-        private static string INT_TYPE = "INT";
-
         private List<string> _supportedVariableTypes = new()
         {
-            INT_TYPE,
+            TypeTable.INT_TYPE,
+            TypeTable.FLOAT_TYPE,
         };
 
         public string SupportedType()
@@ -49,11 +48,11 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
                 );
             }
 
-            if (targetType == INT_TYPE)
+            if (TypeTable.IsNumberType(targetType))
             {
                 CallStack
                     .GetScope(GlobalRegister.RunningFunction)
-                    .AddIntVariable(variableName, 0);
+                    .AddNumberVariable(variableName, targetType);
             }
         }
     }

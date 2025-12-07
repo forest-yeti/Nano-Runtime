@@ -2,6 +2,6 @@
 {
     internal class GlobalStack
     {
-        public static Stack<int> IntStack = new();
+        public static Stack<float> NumberStack = new();
     }
 }

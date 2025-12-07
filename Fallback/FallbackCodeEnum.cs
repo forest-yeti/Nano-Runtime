@@ -11,6 +11,7 @@
         FunctionScopeVariableNotDefined,
         UnsupportedOpCode,
         ReservedWordUsing,
-        EmptyGlobalStack
+        EmptyGlobalStack,
+        LoadFloatToInt
     }
 }
