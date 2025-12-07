@@ -52,7 +52,7 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
             if (targetType == INT_TYPE)
             {
                 CallStack
-                    .GetScope(GlobalRegister.RunnedFunction)
+                    .GetScope(GlobalRegister.RunningFunction)
                     .AddIntVariable(variableName, 0);
             }
         }

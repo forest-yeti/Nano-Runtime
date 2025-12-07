@@ -48,7 +48,7 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
                 return;
             }
 
-            if (!CallStack.GetScope(GlobalRegister.RunnedFunction).HasIntVariable(variableName))
+            if (!CallStack.GetScope(GlobalRegister.RunningFunction).HasIntVariable(variableName))
             {
                 throw new FailedExectionPlan(
                     (int)FallbackCode.FunctionScopeVariableNotDefined,
@@ -57,7 +57,7 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
             }
 
             CallStack
-                .GetScope(GlobalRegister.RunnedFunction)
+                .GetScope(GlobalRegister.RunningFunction)
                 .LoadIntVariable(variableName, intValue);
         }
     }

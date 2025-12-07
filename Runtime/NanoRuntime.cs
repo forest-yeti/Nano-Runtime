@@ -27,12 +27,13 @@ namespace Nano_Runtime.Runtime
         public void Run(ExectionPlan exectionPlan)
         {
             GlobalRegister.InstructionPointer = exectionPlan.GetEntryPointVirtual();
-            GlobalRegister.RunnedFunction = ENTRY_POINT;
+            GlobalRegister.RunningFunction = ENTRY_POINT;
             CallStack.AddScope(ENTRY_POINT, new());
+            CallStack.CallFrameStack.Push(new CallFrame(ENTRY_POINT, 0));
 
             while (true)
             {
-                Function runnedFunction = exectionPlan.GetFunction(GlobalRegister.RunnedFunction);
+                Function runnedFunction = exectionPlan.GetFunction(GlobalRegister.RunningFunction);
 
                 OpCode opCode = runnedFunction.GetInstruction(GlobalRegister.InstructionPointer);
                 if (!_opCodeRunners.ContainsKey(opCode.Type))

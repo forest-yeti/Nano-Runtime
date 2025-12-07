@@ -32,9 +32,9 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
                 return;
             }
 
-            GlobalRegister.CallBreakedPointer = GlobalRegister.InstructionPointer;
+            CallStack.CallFrameStack.Push(new CallFrame(functionName, GlobalRegister.InstructionPointer));
             GlobalRegister.InstructionPointer = BakedHelper.BakeString(functionName) - 1;
-            GlobalRegister.RunnedFunction = functionName;
+            GlobalRegister.RunningFunction = functionName;
             CallStack.AddScope(functionName, new());
         }
     }

@@ -34,7 +34,7 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
             int intValue = GlobalStack.IntStack.Pop();
 
             CallStack
-                .GetScope(GlobalRegister.RunnedFunction)
+                .GetScope(GlobalRegister.RunningFunction)
                 .LoadIntVariable(variableName, intValue);
         }
     }

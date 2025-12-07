@@ -31,7 +31,7 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
             }
 
             int value = CallStack
-                .GetScope(GlobalRegister.RunnedFunction)
+                .GetScope(GlobalRegister.RunningFunction)
                 .GetIntVariable(variableName);
 
             GlobalStack.IntStack.Push(value);

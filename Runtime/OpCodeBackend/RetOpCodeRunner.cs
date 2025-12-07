@@ -14,16 +14,18 @@ namespace Nano_Runtime.Runtime.OpCodeBackend
 
         public void Run(OpCode opCode)
         {
-            CallStack.RemoveScope(GlobalRegister.RunnedFunction);
+            CallStack.RemoveScope(GlobalRegister.RunningFunction);
 
-            if (CallStack.Stack.Count == 0)
+            CallFrame breakedCallFrame = CallStack.CallFrameStack.Pop();
+            if (CallStack.CallFrameStack.Count == 0)
             {
                 throw new ExitProgramSignal();
             }
 
-            string targetFunction = CallStack.Stack.Peek();
-            GlobalRegister.InstructionPointer = GlobalRegister.CallBreakedPointer;
-            GlobalRegister.RunnedFunction = targetFunction;
+            CallFrame returnCallFrame = CallStack.CallFrameStack.Peek();
+
+            GlobalRegister.InstructionPointer = breakedCallFrame.ReturnAddress;
+            GlobalRegister.RunningFunction = returnCallFrame.FunctionName;
         }
     }
 }

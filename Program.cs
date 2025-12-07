@@ -9,6 +9,32 @@ class Program
 
         exectionPlan
             .AddFunction(
+                (new Function("PrintThree"))
+                    .AddInstruction(new OpCode(OpCodeTable.Def, "INT", "result"))
+                    .AddInstruction(new OpCode(OpCodeTable.Loadi, "result", "3"))
+                    .AddInstruction(new OpCode(OpCodeTable.Puti, "result"))
+                    .AddInstruction(new OpCode(OpCodeTable.Call, "__I_Output_WriteLine"))
+                    .AddInstruction(new OpCode(OpCodeTable.Ret))
+            )
+            .AddFunction(
+                (new Function("PrintTwo"))
+                    .AddInstruction(new OpCode(OpCodeTable.Call, "PrintThree"))
+                    .AddInstruction(new OpCode(OpCodeTable.Def, "INT", "result"))
+                    .AddInstruction(new OpCode(OpCodeTable.Loadi, "result", "2"))
+                    .AddInstruction(new OpCode(OpCodeTable.Puti, "result"))
+                    .AddInstruction(new OpCode(OpCodeTable.Call, "__I_Output_WriteLine"))
+                    .AddInstruction(new OpCode(OpCodeTable.Ret))
+            )
+            .AddFunction(
+                (new Function("PrintOne"))
+                    .AddInstruction(new OpCode(OpCodeTable.Call, "PrintTwo"))
+                    .AddInstruction(new OpCode(OpCodeTable.Def, "INT", "result"))
+                    .AddInstruction(new OpCode(OpCodeTable.Loadi, "result", "1"))
+                    .AddInstruction(new OpCode(OpCodeTable.Puti, "result"))
+                    .AddInstruction(new OpCode(OpCodeTable.Call, "__I_Output_WriteLine"))
+                    .AddInstruction(new OpCode(OpCodeTable.Ret))
+            )
+            .AddFunction(
                 (new Function("Sum"))
                     .AddInstruction(new OpCode(OpCodeTable.Def, "INT", "z"))
                     .AddInstruction(new OpCode(OpCodeTable.Popi, "z"))
@@ -22,6 +48,7 @@ class Program
                     .AddInstruction(new OpCode(OpCodeTable.Add, "z"))
                     .AddInstruction(new OpCode(OpCodeTable.Puti, "_Acc"))
                     .AddInstruction(new OpCode(OpCodeTable.Loadi, "_Acc", "0"))
+                    .AddInstruction(new OpCode(OpCodeTable.Call, "PrintOne"))
                     .AddInstruction(new OpCode(OpCodeTable.Ret))
             )
             .AddFunction(
